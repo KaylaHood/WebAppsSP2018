@@ -1,0 +1,115 @@
+html {
+    overflow-y:scroll;
+}
+
+#main {
+  display: block;
+  position: relative;
+  font-family: sans-serif;
+  width: 100%;
+  height: 100%;
+  font-size: 1em;
+  padding: 0%;
+  margin: 0%;
+}
+
+#main div#page-title {
+  position: relative;
+  font-family: 'Coda';
+  margin: 0% 0% 1% 0%;
+  padding: 0%;
+  border-width: thin;
+  border-style: solid;
+  border-color: black;
+}
+#main div#page-title p.title {
+  color: white;
+  position: relative;
+  background: linear-gradient(navy,skyblue);
+  background-origin: border-box;
+  line-height: 3rem;
+  text-align: center;
+  letter-spacing: 0.15rem;
+  text-shadow: 0 0 0.3rem #000000;
+  font-weight: bold;
+  font-size: 3rem;
+  margin: 0% 0% 0.2rem 0%;
+  padding: 1rem;
+  height: 3rem;
+}
+#main div#page-title p.subtitle {
+  position: relative;
+  color: white;
+  background-color: dimgrey;
+  text-align: center;
+  font-weight: normal;
+  font-size: 1.5rem;
+  line-height: 1.5rem;
+  margin: 0%;
+  padding: 0.5rem 0% 0.5rem 0%;
+  height: 1.5rem;
+}
+
+#main div#nav-menu {
+  text-align: center;
+  font-weight: normal;
+  font-size: 1rem;
+  margin: 0.5rem 0% 0.5rem 0%;
+  padding: 0%;
+  height: 3rem;
+  width: auto;
+  position: relative;
+  border-color: black;
+  border-style: solid;
+  border-width: thin;
+}
+#main div#nav-menu div.button-row{
+  background-color: grey;
+  text-align: left;
+  display: block;
+  position: relative;
+  margin: 0%;
+  padding: 0.5rem;
+  height: 2rem;
+}
+#main div#nav-menu div.button-row div.button{
+  color: lightgrey;
+  background-color: black;
+  text-align: center;
+  font-size: 1rem;
+  display: inline-block;
+  position: relative;
+  width: 8rem;
+  height: 1rem;
+  margin: 0rem 1rem 0rem 1rem;
+  padding: 0.5rem;
+  border-style: none solid none solid;
+  border-width: medium;
+  border-color: white;
+}
+
+div#page-body {
+  position: relative;
+  margin: 0.5rem 0% 0.5rem 0%;
+  padding: 0%;
+  overflow: hidden;
+  border-width: thin;
+  border-color: black;
+  border-style: solid;
+}
+div.body {
+  color: black;
+  white-space: pre-wrap;
+  overflow: scroll;
+  background-color: inherit;
+  text-align: left;
+  padding: 0%;
+  min-width: 100%;
+  min-height: 30rem;
+  max-height: 50rem;
+  margin: 0%;
+  left: 0px;
+  top: 0px;
+  font-size: 1rem;
+  position: relative;
+}
