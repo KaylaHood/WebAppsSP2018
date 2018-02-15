@@ -1,7 +1,7 @@
 function NavButtonActions(button) {
   this.click = function(button) {
-      //getData(button.src, 'dynamic-content');
-      post('/index.php',{view: button.src});
+      var path = window.location.pathname;
+      post(path,{view: button.src});
   };
   this.onmouseover = function(elem){
       elem.style.background = 'linear-gradient(dimgrey,black,dimgrey)';

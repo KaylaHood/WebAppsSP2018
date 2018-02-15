@@ -37,14 +37,19 @@ function resizeCanvas() {
 function draw() {
   ctx.fillStyle = "white";
   ctx.fillRect(0,0,canvasElem.width,canvasElem.height);
-  ripples.forEach(function(element) {
-    element.draw();
-  });
-  for(var i = 0; i < ripples.length; i++) {
-    ripples[i].draw();
-    if(ripples[i].radius > 150) {
-      ripples[i] = null;
-      ripples.splice(i,1);
+  if(ripples.length == 0) {
+    drawInitialText();
+  }
+  else { 
+    ripples.forEach(function(element) {
+      element.draw();
+    });
+    for(var i = 0; i < ripples.length; i++) {
+      ripples[i].draw();
+      if(ripples[i].radius > 150) {
+        ripples[i] = null;
+        ripples.splice(i,1);
+      }
     }
   }
 }
@@ -56,6 +61,12 @@ function addRipple(x,y,recur) {
     setTimeout(function() { addRipple(x,y,false); },500);
     setTimeout(function() { addRipple(x,y,false); },1000);
   }
+}
+
+function drawInitialText() {
+  ctx.font = "30px Papyrus San MS";
+  ctx.fillStyle = "black";
+  ctx.fillText("Click on me!",10,50);
 }
 
 function main() {
