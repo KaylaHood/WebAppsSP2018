@@ -48,6 +48,11 @@ const buttons = [
     id:'button-canvas',
     src:'Canvas',
     actions: new NavButtonActions(this)  
+  },
+  buttonTasks = {
+    id:'button-tasks',
+    src:'Tasks',
+    actions: new NavButtonActions(this)
   }
 ];
 
@@ -59,13 +64,6 @@ function initButtons() {
 
 
 function main () {
-    var XMLHttpRequestObject = false;
-
-    if (window.XMLHttpRequest) {
-        XMLHttpRequestObject = new XMLHttpRequest();
-    } else if (window.ActiveXObject) {
-        XMLHttpRequestObject = new ActiveXObject("Microsoft.XMLHTTP");
-    }
     document.addEventListener("DOMContentLoaded", function(event) {
         initButtons();
     });

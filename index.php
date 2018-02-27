@@ -24,6 +24,7 @@
     <div id="button-aboutme" class="button">About Me</div>
     <div id="button-stats" class="button">Task 3</div>
     <div id="button-canvas" class="button">Task 4</div>
+    <div id="button-tasks" class="button">Task 5</div>
     </div>
   </div>
   <div id="page-body">
@@ -33,13 +34,22 @@
     $contentdir = "Views";
     $contentext = "php";
     if($_SERVER['REQUEST_METHOD'] === 'GET')  {
-      $content = $_GET["view"];
-      
+      if(isset($_GET["view"])) {
+        $content = $_GET["view"];
+      }
+      else {
+        echo "The view value was not set for the get request";
+      }
     } else if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-      $content = $_POST["view"];
+      if(isset($_POST["view"])) {
+        $content = $_POST["view"];
+      }
+      else {
+        echo "The view value was not set for the post request";
+      }
     }
-    $contentpath = "./{$contentdir}/{$content}.{$contentext}"
-    require $contentpath
+    $contentpath = "./{$contentdir}/{$content}.{$contentext}";
+    require $contentpath;
     ?></div>
   </div>
   </div>
