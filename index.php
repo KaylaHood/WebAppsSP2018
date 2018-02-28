@@ -29,7 +29,7 @@
   </div>
   <div id="page-body">
     <div id="dynamic-content" class="body"><?php
-    $GLOBALS["INDEXPHP"] = $_SERVER['SCRIPT_URI'];
+    $GLOBALS["INDEXPHP"] = $_SERVER['REQUEST_URI'];
     $defaultcontent = "Home";
     $text = "";
     $contentdir = "Views";

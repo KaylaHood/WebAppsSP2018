@@ -1,7 +1,9 @@
 
-var TaskData = [];
+var TaskData = {};
+var highestKey = 0;
 
 function saveTaskData() {
+  console.log("saveTaskData");
   var saveForm = document.getElementById("form-save");
   var userData = saveForm.elements.namedItem("user-data");
   userData.value = JSON.stringify(TaskData);
@@ -9,16 +11,22 @@ function saveTaskData() {
 }
 
 function loadTaskData() {
+  console.log("loadTaskData");
   var table = document.getElementById("table-body");
   var numRows = table.rows.length;
   for(var i = 0;i < numRows; i++) {
-    var row = table.rows[i].cells;
-    var title = row[1].firstChild.value;
-    var desc = row[2].firstChild.value;
-    TaskData.push({
+    var row = table.rows[i];
+    var key = row.getAttribute("id");
+    var cells = row.cells;
+    var title = cells[1].firstChild.value;
+    var desc = cells[2].firstChild.value;
+    TaskData[key] = {
       "title": title,
       "desc": desc
-    });
+    };
+    if(parseInt(key) > highestKey) {
+      highestKey = key;
+    }
   }
 }
 
@@ -36,65 +44,83 @@ function initTasks() {
 }
 
 function setupTaskSubmit() {
+  console.log("setupTaskSubmit");
   var saveForm = document.getElementById("form-save");
   saveForm.onsubmit = function(){ saveTaskData(); };
 }
 
+function getNextKey() {
+  var nextKey = parseInt(highestKey) + 1;
+  highestKey = nextKey.toString();
+  return nextKey;
+}
+
 function setupTaskButtons() {
+  console.log("setupTaskButtons");
   var table = document.getElementById("table-body");
   var numRows = table.rows.length;
   for(var i = 0;i < numRows; i++) {
-    var row = table.rows[i].cells;
-    var deleteButton = row[0].firstChild;
+    var cells = table.rows[i].cells;
+    var deleteButton = cells[0].firstChild;
     deleteButton.onclick = function(){
-      TaskData.splice(i,1);
-      table.removeChild(table.rows[i]);
+      var table = document.getElementById("table-body");
+      var tableRow = this.parentNode.parentNode;
+      var key = tableRow.getAttribute("id");
+      if(parseInt(highestKey) == parseInt(key)) {
+        highestKey = (parseInt(highestKey) - 1).toString();
+      }
+      delete TaskData[key];
+      table.removeChild(tableRow);
     };
   }
-  var newTaskTitle = document.getElementById("new-task-title");
+  var newTaskTitle = document.getElementById("td-new-task-title");
   newTaskTitle.onclick = function(){
     setFooterDisabled(false);  
   };
-  newTaskTitle.onfocusout = function(){
+  var newTaskTitleInput = document.getElementById("new-task-title");
+  newTaskTitleInput.addEventListener("focusout", function(){
     if(!(this.value === "")) {
       var newTitle = this.value;
       var newDesc = document.getElementById("new-task-desc").value;
+      console.log("description: "+newDesc);
       var newTask = {
         "title": newTitle,
         "desc": newDesc
       };
-      addTaskToTable(newTask);
+      addTaskToTable(newTask, getNextKey());
     }
     setFooterDisabled(true);
-  };
+  });
 }
 
-function addTaskToTable(newTask) {
-  TaskData.push(newTask);
+function addTaskToTable(newTask, newKey) {
+  console.log("addTaskToTable");
+  TaskData[newKey] = newTask;
   var table = document.getElementById("table-body");
-  var newTaskIdx = table.rows.length + 1;
   var newRow = table.insertRow(table.rows.length);
+  newRow.setAttribute("id",newKey);
   var delCell = newRow.insertCell(0);
   var delButton = document.createElement("button");
-  delButton.setAttribute("id","task-delete-" + newTaskIdx.toString());
+  delButton.setAttribute("id","task-delete-" + newKey);
   delButton.setAttribute("type","button");
   delButton.innerHTML = "Delete";
   delCell.appendChild(delButton);
   var titleCell = newRow.insertCell(1);
   var titleInput = document.createElement("input");
-  titleInput.setAttribute("id","task-title-" + newTaskIdx.toString());
+  titleInput.setAttribute("id","task-title-" + newKey);
   titleInput.setAttribute("type","text");
   titleInput.setAttribute("value",newTask["title"]);
   titleCell.appendChild(titleInput);
   var descCell = newRow.insertCell(2);
   var descText = document.createElement("textarea");
-  descText.setAttribute("id","task-desc-" + newTaskIdx.toString());
-  descText.setAttribute("name","task-desc-" + newTaskIdx.toString());
+  descText.setAttribute("id","task-desc-" + newKey);
+  descText.setAttribute("name","task-desc-" + newKey);
   descText.value = newTask["desc"];
   descCell.appendChild(descText);
 }
 
 function setFooterDisabled(boolvalue) {
+  console.log("setFooterDisabled");
   var newTaskTitle = document.getElementById("new-task-title");
   var newTaskDesc = document.getElementById("new-task-desc");
   var newTaskDelete = document.getElementById("new-task-delete");

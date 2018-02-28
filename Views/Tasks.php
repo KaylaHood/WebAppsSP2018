@@ -82,7 +82,7 @@
 
   function get_data_save_path() {
     if(isset($_SESSION["username"])) {
-      $data_path = "/Users/Tasks/" . $_SESSION["username"] . ".txt";
+      $data_path = "/home/kayla/html/WebAppsSP2018/Users/Tasks/" . $_SESSION["username"] . ".txt";
       return $data_path;
     }
     else {
@@ -161,22 +161,22 @@
       </thead>
       <tbody id="table-body">
       <?php if(isset($_SESSION["user-data"])) : ?>
-      <?php for($i = 0, $size = count($_SESSION["user-data"]); $i < $size; $i++) : ?>
-        <tr>
-          <td><button id="task-delete-<?php echo $i; ?>" type="button">Delete</button></td>
-          <td><input id="task-title-<?php echo $i; ?>" type="text" value="<?php echo $_SESSION["user-data"][$i]["title"]; ?>"></td>
-          <td><textarea id="task-desc-<?php echo $i; ?>" name="task-desc-<?php echo $i; ?>"><?php 
-            echo $_SESSION["user-data"][$i]["desc"]; 
+      <?php foreach($_SESSION["user-data"] as $key => $value) : ?>
+      <tr id="<?php echo $key; ?>">
+          <td><button id="task-delete-<?php echo $key; ?>" type="button">Delete</button></td>
+          <td><input id="task-title-<?php echo $key; ?>" type="text" value="<?php echo $value["title"]; ?>"></td>
+          <td><textarea id="task-desc-<?php echo $key; ?>" name="task-desc-<?php echo $key; ?>"><?php 
+            echo $value["desc"]; 
           ?></textarea></td>
         </tr>
-      <?php endfor; ?>
+      <?php endforeach; ?>
       <?php endif; ?>
       </tbody>
       <tfoot>
         <tr>
-          <td><button id="new-task-delete" type="button" disabled>Delete</button></td>
-          <td><input id="new-task-title" type="text" placeholder="my new task" disabled></td>
-          <td><textarea id="new-task-desc" name="new-task-desc" placeholder="my new task's description" disabled></textarea></td>
+          <td id="td-new-task-delete"><button id="new-task-delete" type="button" disabled>Delete</button></td>
+          <td id="td-new-task-title"><input id="new-task-title" type="text" placeholder="my new task" disabled></td>
+          <td id="td-new-task-desc"><textarea id="new-task-desc" name="new-task-desc" placeholder="my new task's description" disabled></textarea></td>
         </tr>
       </tfoot>
     </table>
