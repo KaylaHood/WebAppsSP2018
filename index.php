@@ -29,6 +29,7 @@
   </div>
   <div id="page-body">
     <div id="dynamic-content" class="body"><?php
+    $GLOBALS["INDEXPHP"] = $_SERVER['SCRIPT_URI'];
     $defaultcontent = "Home";
     $text = "";
     $contentdir = "Views";
@@ -38,7 +39,7 @@
         $content = $_GET["view"];
       }
       else {
-        echo "The view value was not set for the get request";
+        $content = "Home";
       }
     } else if ($_SERVER['REQUEST_METHOD'] === 'POST') {
       if(isset($_POST["view"])) {

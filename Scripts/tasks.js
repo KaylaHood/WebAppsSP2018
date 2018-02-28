@@ -24,6 +24,7 @@ function loadTaskData() {
 
 function tasks_main() {
   document.addEventListener("DOMContentLoaded", function(event) {
+    console.log("Tasks are being initiated!");
     initTasks();
   });
 }
@@ -102,3 +103,4 @@ function setFooterDisabled(boolvalue) {
   newTaskDelete.disabled = boolvalue;
 }
 
+tasks_main();

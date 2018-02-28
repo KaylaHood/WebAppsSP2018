@@ -1,44 +1,6 @@
 <script type="text/javascript" src="Scripts/tasks.js"></script>
 <?php
-  
-  $LOGIN_FAILURE = 0;
-  $LOGIN_FAILURE_MSG = "";
-
-
-  class TaskData {
-    // array of arrays:
-    // $tasks = array(
-    //  array("title" => "my task",
-    //        "desc" => "description"),
-    //  array("title" => "my 2nd task",
-    //        "desc" => "description"),
-    //  ...
-    //  );
-    //
-    public $tasks = array();
-
-    public function __construct() {
-      //empty
-    }
-
-    public function set_tasks($data) {
-      $this->tasks = $data;
-    }
-
-    public function save($fn) {
-      $s = serialize($this);
-      file_put_contents($fn, $s);
-    }
-
-    public static function load($fn) {
-      $s = file_get_contents($fn);
-      $new = unserialize($s);
-      return $new;
-    }
-
-  }
-
-
+  session_start();
   if($_SERVER['REQUEST_METHOD'] === 'POST') {
     /*if ($_SERVER['SERVER_NAME'] != "dias11.cs.trinity.edu") {
       echo "<p>You must access this page from on campus through dias11.</p>";
@@ -51,7 +13,7 @@
     else if(isset($_POST["form-save"])) {
       echo "Save tasks form has been submitted";
       if(isset($_POST["user-data"])) {
-        save_tasks(test_input($_POST["user-data"]));
+        save_tasks($_POST["user-data"]);
       }
       else {
         echo "No data was sent with the save request";
@@ -63,9 +25,34 @@
     }
   }
 
+  function isValidJson($strJson) { 
+      if($strJson === "") {
+        return FALSE;
+      }
+      else {
+        json_decode($strJson); 
+        return (json_last_error() === JSON_ERROR_NONE);
+      } 
+  }
+
+  function save_tasks($data) {
+    if(isValidJson($data)) {
+      $data = json_decode($data,TRUE);
+      $_SESSION["user-data"] = $data;
+      $data_path = get_data_save_path(); 
+      $s = serialize($data);
+      file_put_contents($data_path, $s);
+    }
+  }
+
+  function load($fn) {
+    $s = file_get_contents($fn);
+    $new = unserialize($s);
+    return $new;
+  }
+
   function login_failure($msg) {
-    $LOGIN_FAILURE = 1;
-    $LOGIN_FAILURE_MSG = $msg;
+    $_POST["LOGIN_FAILURE_MSG"] = $msg;
   }
 
   function login_user() {
@@ -75,19 +62,14 @@
     if(isset(${$username})) {
       $password = test_input($_POST["password"]);
       if(${$username} == $password) {
-        session_start();
         $_SESSION["username"] = $username;
         $_SESSION["password"] = $password;
         $data_path = get_data_save_path();
+        $tasks = array();
         if(file_exists($data_path)) {
-          $_SESSION["user-data"] = TaskData::load($data_path);
+          $tasks = load($data_path);
         }
-        else {
-          $empty_array = array();
-          $newData = new TaskData();
-          $newData->set_tasks($empty_array);
-          $_SESSION["user-data"] = $newData;
-        }
+        $_SESSION["user-data"] = $tasks;
       }
       else {
         login_failure("password was incorrect");
@@ -109,15 +91,6 @@
     }
   }
 
-  function save_tasks($data) {
-    $data = json_decode($data,TRUE);
-    $data_obj = new TaskData();
-    $data_obj->set_tasks($data); 
-    $_SESSION["user-data"] = $data_obj;
-    $data_path = get_data_save_path(); 
-    $data_obj->save($data_path); 
-  }
-
   function logout_user() {
     session_unset();
     session_destroy();
@@ -135,11 +108,11 @@
   <?php if(!(isset($_SESSION["username"])) || !(isset($_SESSION["password"]))) : ?>
   <div id="login">
     <p><?php
-      if($LOGIN_FAILURE === 1) {
-        echo $LOGIN_FAILURE_MSG; 
+      if(isset($_POST["LOGIN_FAILURE_MSG"])) {
+        echo $_POST["LOGIN_FAILURE_MSG"]; 
       }
     ?></p>
-    <form id="form-login" action="/index.php" method="post">
+    <form id="form-login" action="<?php echo $GLOBALS["INDEXPHP"]; ?>" method="post">
       <fieldset>
       <legend>Login</legend>
       Username:<br>
@@ -156,7 +129,7 @@
   </div>
   <?php else : ?>
   <div id="div-logout">
-    <form id="form-logout" action="/index.php" method="post">
+    <form id="form-logout" action="<?php echo $GLOBALS["INDEXPHP"]; ?>" method="post">
       <input id="submit-logout" type="submit" value="Logout" name="form-logout">
       <input type="hidden" value="Tasks" name="view">
     </form>
@@ -169,7 +142,7 @@
   </span>
   <div id="actions">
     <span id="action-save">
-      <form id="form-save" action="/index.php" method="post">
+      <form id="form-save" action="<?php echo $GLOBALS["INDEXPHP"]; ?>" method="post">
         <input id="user-data" type="hidden" value="" name="user-data">
         <input id="submit-save" type="submit" value="Save Changes" name="form-save">
         <input type="hidden" value="Tasks" name="view">
@@ -191,9 +164,9 @@
       <?php for($i = 0, $size = count($_SESSION["user-data"]); $i < $size; $i++) : ?>
         <tr>
           <td><button id="task-delete-<?php echo $i; ?>" type="button">Delete</button></td>
-          <td><input id="task-title-<?php echo $i; ?>" type="text" value="<?php echo (($_SESSION["user-data"])->$tasks[$i])["title"]; ?>"></td>
+          <td><input id="task-title-<?php echo $i; ?>" type="text" value="<?php echo $_SESSION["user-data"][$i]["title"]; ?>"></td>
           <td><textarea id="task-desc-<?php echo $i; ?>" name="task-desc-<?php echo $i; ?>"><?php 
-            echo (($_SESSION["user-data"])->$tasks[$i])["desc"]; 
+            echo $_SESSION["user-data"][$i]["desc"]; 
           ?></textarea></td>
         </tr>
       <?php endfor; ?>
