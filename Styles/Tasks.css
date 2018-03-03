@@ -129,8 +129,11 @@ td:nth-child(2), th:nth-child(2) {
   max-width: 12rem;
   text-align: center;
 }
+span {
+  display: inline;
+}
 textarea[id^="task-desc"], textarea[id^="new-task-desc"] {
-  width: 100%;
+  width: 99%;
 }
 button[id^="task-delete"], button[id^="new-task-delete"] {
   width: 5rem;

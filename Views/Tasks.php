@@ -9,20 +9,14 @@
       die ();
     }*/
     if(isset($_POST["form-login"])) {
-      echo "Login form has been submitted";
       login_user();
     }
     else if(isset($_POST["form-save"])) {
-      echo "Save tasks form has been submitted";
       if(isset($_POST["user-data"])) {
         save_tasks($_POST["user-data"]);
       }
-      else {
-        echo "No data was sent with the save request";
-      }
     }
     else if(isset($_POST["form-logout"])) {
-      echo "Logout form has been submitted";
       logout_user();
     }
   }
@@ -96,7 +90,6 @@
       return $data_path;
     }
     else {
-      echo "No user is logged in, cannot save.";
       die();
     }
   }
@@ -146,9 +139,6 @@
   </div>
   <span id="welcome-user" class="left-aligned">
     <p>Hello, <?php echo $_SESSION["username"]; ?></p>
-  </span>
-  <span id="data-msg" class="right-aligned">
-  <p>No unsaved changes.</p>
   </span>
   <div id="actions">
     <span id="action-save">
