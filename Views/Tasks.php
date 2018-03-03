@@ -1,5 +1,6 @@
 <script type="text/javascript" src="Scripts/tasks.js"></script>
 <?php
+  require "/home/kayla/html/WebAppsSP2018/json.php";
   session_start();
   if($_SERVER['REQUEST_METHOD'] === 'POST') {
     /*if ($_SERVER['SERVER_NAME'] != "dias11.cs.trinity.edu") {
@@ -36,13 +37,20 @@
   }
 
   function save_tasks($data) {
-    if(isValidJson($data)) {
-      $data = json_decode($data,TRUE);
-      $_SESSION["user-data"] = $data;
-      $data_path = get_data_save_path(); 
-      $s = serialize($data);
-      file_put_contents($data_path, $s);
-    }
+    #if(isValidJson($data)) {
+      #$data = json_decode($data,TRUE);
+      #$_SESSION["user-data"] = $data;
+      #$data_path = get_data_save_path(); 
+      #$s = serialize($data);
+      #file_put_contents($data_path, $s);
+    #}
+    $json = new Services_JSON(SERVICES_JSON_LOOSE_TYPE);
+    $data = $json->decode($data);
+    $_SESSION["user-data"] = $data;
+    echo $_SESSION["user-data"];
+    $data_path = get_data_save_path();
+    $s = serialize($data);
+    file_put_contents($data_path, $s);
   }
 
   function load($fn) {
@@ -83,6 +91,7 @@
   function get_data_save_path() {
     if(isset($_SESSION["username"])) {
       $data_path = "/home/kayla/html/WebAppsSP2018/Users/Tasks/" . $_SESSION["username"] . ".txt";
+      #$data_path = "/users/khood/Local/HTML-Documents/WebApps/Users/Tasks/" . $_SESSION["username"] . ".txt";
       return $data_path;
     }
     else {
