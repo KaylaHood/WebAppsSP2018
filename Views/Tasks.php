@@ -1,6 +1,7 @@
 <script type="text/javascript" src="Scripts/tasks.js"></script>
 <?php
-  require "/home/kayla/html/WebAppsSP2018/json.php";
+  #require "/home/kayla/html/WebAppsSP2018/json.php";
+  require "/users/khood/Local/HTML-Documents/WebApps/json.php";
   session_start();
   if($_SERVER['REQUEST_METHOD'] === 'POST') {
     /*if ($_SERVER['SERVER_NAME'] != "dias11.cs.trinity.edu") {
@@ -90,8 +91,8 @@
 
   function get_data_save_path() {
     if(isset($_SESSION["username"])) {
-      $data_path = "/home/kayla/html/WebAppsSP2018/Users/Tasks/" . $_SESSION["username"] . ".txt";
-      #$data_path = "/users/khood/Local/HTML-Documents/WebApps/Users/Tasks/" . $_SESSION["username"] . ".txt";
+      #$data_path = "/home/kayla/html/WebAppsSP2018/Users/Tasks/" . $_SESSION["username"] . ".txt";
+      $data_path = "/users/khood/Local/HTML-Documents/WebApps/Users/Tasks/" . $_SESSION["username"] . ".txt";
       return $data_path;
     }
     else {
