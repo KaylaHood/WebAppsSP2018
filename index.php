@@ -7,7 +7,7 @@
   <style type="text/css">
   @import url('Styles/Tasks.css');
   </style>
-  <script type="text/javascript" src="Scripts/utils.js"> 
+  <script type="text/javascript" src="Scripts/utils.js">
   </script>
   <script type="text/javascript" src="Scripts/index.js">
   </script>
@@ -25,6 +25,7 @@
     <div id="button-stats" class="button">Task 3</div>
     <div id="button-canvas" class="button">Task 4</div>
     <div id="button-tasks" class="button">Task 5</div>
+    <div id="button-sprites" class="button">Task 7</div>
     </div>
   </div>
   <div id="page-body">

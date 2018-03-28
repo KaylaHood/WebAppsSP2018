@@ -47,11 +47,16 @@ const buttons = [
   buttonCanvas = {
     id:'button-canvas',
     src:'Canvas',
-    actions: new NavButtonActions(this)  
+    actions: new NavButtonActions(this)
   },
   buttonTasks = {
     id:'button-tasks',
     src:'Tasks',
+    actions: new NavButtonActions(this)
+  },
+  buttonTasks = {
+    id:'button-sprites',
+    src:'Sprites',
     actions: new NavButtonActions(this)
   }
 ];
