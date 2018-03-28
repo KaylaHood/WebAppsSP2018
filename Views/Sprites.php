@@ -1,4 +1,4 @@
 <div class="fullscreen">
-    <object type="text/html" data="http://pandora02.cs.trinity.edu:9130/" class="fullscreen">
-    </object>
+    <iframe class="fullscreen" src="http://pandora02.cs.trinity.edu:9130/">
+    </iframe>
 </div>
