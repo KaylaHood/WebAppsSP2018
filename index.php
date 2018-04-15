@@ -26,6 +26,7 @@
     <div id="button-canvas" class="button">Task 4</div>
     <div id="button-tasks" class="button">Task 5</div>
     <div id="button-sprites" class="button">Task 7</div>
+    <div id="button-tasks2" class="button">Task 8</div>
     </div>
   </div>
   <div id="page-body">

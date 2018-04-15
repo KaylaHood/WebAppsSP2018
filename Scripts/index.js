@@ -54,9 +54,14 @@ const buttons = [
     src:'Tasks',
     actions: new NavButtonActions(this)
   },
-  buttonTasks = {
+  buttonSprites = {
     id:'button-sprites',
     src:'Sprites',
+    actions: new NavButtonActions(this)
+  },
+  buttonTasks2 = {
+    id:'button-tasks2',
+    src:'Tasks2',
     actions: new NavButtonActions(this)
   }
 ];
