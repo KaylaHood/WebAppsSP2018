@@ -17,7 +17,6 @@ function Ripple(x,y) {
   this.gradient = grd;
   this.draw = function() {
     // draw ripple
-    var gradient = 
     ctx.beginPath();
     ctx.arc(this.pos.x,this.pos.y,this.radius,0,2*Math.PI);
     ctx.strokeStyle = this.gradient;
@@ -40,7 +39,7 @@ function draw() {
   if(ripples.length == 0) {
     drawInitialText();
   }
-  else { 
+  else {
     ripples.forEach(function(element) {
       element.draw();
     });

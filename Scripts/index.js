@@ -63,6 +63,11 @@ const buttons = [
     id:'button-tasks2',
     src:'Tasks2',
     actions: new NavButtonActions(this)
+  },
+  buttonTask9 = {
+    id:'button-task9',
+    src:'Task9',
+    actions: new NavButtonActions(this)
   }
 ];
 
